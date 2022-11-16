@@ -21,7 +21,7 @@ def map_2d(df,color='d_avg'):
                             height=600
                             )
     fig.update_traces(marker=dict(size=5), selector=dict(mode='markers'))
-    fig.update_layout(margin=dict(l=100, r=100))
+    fig.update_layout(margin=dict(l=30, r=30))
     return fig
 
 
@@ -45,7 +45,7 @@ def map_3d(df,color='d_avg'):
                                "camera_eye": {"x": 0.3, "y": -1, "z": 0.3},
                                "aspectratio": {"x": 1, "y": 0.7, "z": 0.25}},
                       height=600,
-                      margin=dict(l=100, r=100),
+                      margin=dict(l=30, r=30),
 
                       )
     return fig
@@ -65,7 +65,7 @@ def elev_line(df,color='d_avg'):
                      title='Elevation Profile in m'
                      )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
-    fig.update_layout(margin=dict(l=100, r=100))
+    fig.update_layout(margin=dict(l=30, r=30))
     return fig
 
 def line_d_avg(df):
@@ -81,7 +81,7 @@ def line_d_avg(df):
                        color_discrete_sequence=['indianred'],
                        )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
-    fig.update_layout(margin=dict(l=100, r=100))
+    fig.update_layout(margin=dict(l=30, r=30))
     return fig
 
 def histo_d_avg(df):
@@ -98,6 +98,6 @@ def histo_d_avg(df):
                        opacity=0.85
                        )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
-    fig.update_layout(margin=dict(l=100, r=100),
+    fig.update_layout(margin=dict(l=30, r=30),
                       xaxis_title="90sec average elevation in m")
     return fig

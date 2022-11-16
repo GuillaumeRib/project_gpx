@@ -17,7 +17,7 @@ from gpx_viewer.interface import data_viz
 ###################################
 # CONVERT GPX to Dataframe
 ####################################
-test_path = 'gpx_viewer/data/Morvan_day2.gpx'
+test_path = 'gpx_viewer/data/Morvan_day1.gpx'
 df = get_data.get_gpx(gpx_path=test_path)
 df = get_data.data_feat_eng(df)
 
@@ -35,7 +35,7 @@ fig_5 = data_viz.histo_d_avg(df)
 ####################################
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server=app.server
-title = html.H1(children="GPX Data Visualisation")
+title = html.H1(children="Clem's Suffer Fest")
 
 map_2d = dcc.Graph(figure=fig_1)
 map_3d = dcc.Graph(figure=fig_2)
@@ -54,7 +54,7 @@ app.layout = html.Div(children=[
     row_1,
     row_2,
     row_3,
-    #row_4,
+    row_4,
     row_5
 ])
 
