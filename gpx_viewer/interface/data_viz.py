@@ -42,7 +42,7 @@ def map_3d(df,color='d_avg'):
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
     fig.update_layout(scene = {"xaxis": {"nticks": 5},
                                "zaxis": {"nticks": 10},
-                               "camera_eye": {"x": 0.3, "y": -1, "z": 0.3},
+                               "camera_eye": {"x": -0.5, "y": 0.5, "z": 0.5},
                                "aspectratio": {"x": 1, "y": 0.7, "z": 0.25}},
                       height=600,
                       margin=dict(l=30, r=30),
