@@ -82,7 +82,7 @@ def line_d_avg(df):
                        )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
     fig.update_layout(margin=dict(l=100, r=100))
-    return df
+    return fig
 
 def histo_d_avg(df):
     '''

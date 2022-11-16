@@ -47,5 +47,4 @@ def data_feat_eng(df):
     # Avg deniv for color
     n=90
     df['d_avg'] = df['elev_diff'].rolling(n).sum().round(2)
-    df.d_avg.plot()
     return df
