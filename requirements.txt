@@ -9,7 +9,5 @@ dash-bootstrap-components
 # GPX
 gpxpy
 
-# User Interface
-streamlit
-streamlit_image_comparison
-
+# Server
+gunicorn
