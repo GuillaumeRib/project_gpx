@@ -21,6 +21,7 @@ def map_2d(df,color='d_avg'):
                             height=600
                             )
     fig.update_traces(marker=dict(size=5), selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=100, r=100))
     return fig
 
 
@@ -43,7 +44,9 @@ def map_3d(df,color='d_avg'):
                                "zaxis": {"nticks": 10},
                                "camera_eye": {"x": 0.3, "y": -1, "z": 0.3},
                                "aspectratio": {"x": 1, "y": 0.7, "z": 0.25}},
-                      height=600
+                      height=600,
+                      margin=dict(l=100, r=100),
+
                       )
     return fig
 
@@ -62,6 +65,7 @@ def elev_line(df,color='d_avg'):
                      title='Elevation Profile in m'
                      )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=100, r=100))
     return fig
 
 def line_d_avg(df):
@@ -74,13 +78,13 @@ def line_d_avg(df):
                        template='plotly_dark',
                        hover_name='d+',
                        title='90sec Elevation gain/loss in m',
-                       color_discrete_sequence=['lightblue'],
-                       opacity=0.85
+                       color_discrete_sequence=['indianred'],
                        )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=100, r=100))
     return df
 
-def line_d_avg(df):
+def histo_d_avg(df):
     '''
     Plot the average deniv over 90sec
     '''
@@ -94,4 +98,6 @@ def line_d_avg(df):
                        opacity=0.85
                        )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=100, r=100),
+                      xaxis_title="90sec average elevation in m")
     return fig
