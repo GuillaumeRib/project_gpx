@@ -62,4 +62,5 @@ app.layout = html.Div(children=[
 # RUN the app
 ####################################
 if __name__ == '__main__':
-    server = app.run_server(debug=True)
+    server=app.server
+    app.run_server(debug=True)
