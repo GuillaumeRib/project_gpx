@@ -1,8 +1,6 @@
 ####################################
 # IMPORTS
 ####################################
-from importlib.resources import path
-import streamlit as st
 
 import pandas as pd
 
