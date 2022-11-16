@@ -4,7 +4,7 @@
 import gpxpy
 import pandas as pd
 test_path = 'project_gpx_viewer/data/Morvan_day2.gpx'
-def get_gpx(gpx_path=test_path):
+def get_gpx(gpx_path):
     '''
     Convert a gpx file as INPUT to a pd DataFrame as OUTPUT
     '''
