@@ -35,7 +35,7 @@ fig_5 = data_viz.histo_d_avg(df)
 ####################################
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server=app.server
-title = html.H1(children="Clem's Suffer Fest")
+title = html.H1(children="GPX Data Visualization")
 
 map_2d = dcc.Graph(figure=fig_1)
 map_3d = dcc.Graph(figure=fig_2)

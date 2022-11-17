@@ -78,7 +78,8 @@ def line_d_avg(df):
                        template='plotly_dark',
                        hover_name='d+',
                        title='90sec Elevation gain/loss in m',
-                       color_discrete_sequence=['indianred'],
+                       color_discrete_sequence=['lightblue'],
+                       opacity=0.85
                        )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
     fig.update_layout(margin=dict(l=30, r=30))
