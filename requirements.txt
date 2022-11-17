@@ -5,6 +5,7 @@ pandas
 plotly.express
 dash
 dash-bootstrap-components
+dash_bootstrap_templates
 
 # GPX
 gpxpy
