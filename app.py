@@ -17,7 +17,7 @@ from gpx_viewer.interface import data_viz
 ###################################
 # CONVERT GPX to Dataframe
 ####################################
-test_path = 'gpx_viewer/data/Morvan_day1.gpx'
+test_path = 'gpx_viewer/data/Ambert_Col_des_Supeyres.gpx'
 df = get_data.get_gpx(gpx_path=test_path)
 df = get_data.data_feat_eng(df)
 
