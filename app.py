@@ -25,7 +25,10 @@ df = get_data.data_feat_eng(df)
 # INIT APP
 ####################################
 dbc_css = ("https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates@V1.0.2/dbc.min.css")
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY, dbc_css])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY, dbc_css],
+                meta_tags=[{'name':'viewport',
+                            'content':'width=device-width,initial-scale=1.0'}]
+                )
 
 server=app.server
 
@@ -61,21 +64,37 @@ d_avg = dcc.Graph(figure=fig_4)
 histo = dcc.Graph(figure=fig_5)
 
 
+# Max 12 col available - choose size for screen size
+xs=12
+sm=12
+md=12
+lg=12
+xl=6
+xxl=6
+
+
+
 app.layout = dbc.Container([
     dbc.Row([
-        dbc.Col(title,width=12,)
+        dbc.Col(title,width=12,class_name=('mt-4'))
     ]),
     dbc.Row([
-        dbc.Col(map_2d,width={'size':5,'offset':1}),
-        dbc.Col(map_3d,width=5),
+        dbc.Col(map_2d,
+                xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
+        dbc.Col(map_3d,
+                xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
     ]),
     dbc.Row([
-        dbc.Col(elev_line,width={'size':5,'offset':1}),
-        dbc.Col(d_plus,width=5),
+        dbc.Col(elev_line,
+                xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
+        dbc.Col(d_plus,
+                xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
     ]),
     dbc.Row([
-        dbc.Col(d_avg,width={'size':5,'offset':1}),
-        dbc.Col(histo,width=5),
+        dbc.Col(d_avg,
+                xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
+        dbc.Col(histo,
+                xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
     ],justify=True),
 
 ],
