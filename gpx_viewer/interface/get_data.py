@@ -27,44 +27,37 @@ def get_gpx(gpx_path):
     df = pd.DataFrame.from_records(points)
     return df
 
-def data_feat_eng(df):
-    '''
-    pd DataFrame from gpx file as INPUT.
-    Create new features, enriching df
-    OUTPUT pd DataFrame with added features
-    '''
-
-    # Duration
-    df[['duration']] = df[['time']] - df[['time']].iloc[0]
-    df['duration'] = pd.to_datetime(df['duration'].dt.total_seconds(),unit='s').dt.strftime("%H:%M:%S")
-
-    # D+
-    df[['elev_diff']] = df[['elevation']].diff()
-    df['d+'] = df[df['elev_diff']>0]['elev_diff'].cumsum().round(2)
-    df = df.fillna(method='ffill')
-
-    # Cumul Elevation
-    df['elev_cum'] = df.elev_diff.cumsum().round(2)
-
-    # Avg deniv for color
-    n=60
-    df['d_avg'] = df['elev_diff'].rolling(n).sum().round(2)
-    return df
-
 
 ####################################
 # FIT DATA PARSING
 ####################################
-from datetime import datetime, timedelta
-from typing import Dict, Union, Optional,Tuple
-
-import pandas as pd
-
 import fitdecode
+from typing import Dict, Union, Optional,Tuple
+from datetime import datetime, timedelta
 
 # The names of the columns we will use in our points DataFrame. For the data we will be getting
 # from the FIT data, we use the same name as the field names to make it easier to parse the data.
 POINTS_COLUMN_NAMES = ['latitude', 'longitude', 'lap', 'altitude', 'timestamp', 'heart_rate', 'cadence', 'speed']
+
+# The names of the columns we will use in our laps DataFrame.
+LAPS_COLUMN_NAMES = ['number', 'start_time', 'total_distance', 'total_elapsed_time',
+                     'max_speed', 'max_heart_rate', 'avg_heart_rate']
+
+
+def get_fit_lap_data(frame: fitdecode.records.FitDataMessage) -> Dict[str, Union[float, datetime, timedelta, int]]:
+    """Extract some data from a FIT frame representing a lap and return
+    it as a dict.
+    """
+
+    data: Dict[str, Union[float, datetime, timedelta, int]] = {}
+
+    for field in LAPS_COLUMN_NAMES[1:]:  # Exclude 'number' (lap number) because we don't get that
+                                        # from the data but rather count it ourselves
+        if frame.has_field(field):
+            data[field] = frame.get_value(field)
+
+    return data
+
 
 def get_fit_point_data(frame: fitdecode.records.FitDataMessage) -> Optional[Dict[str, Union[float, int, str, datetime]]]:
     """Extract some data from an FIT frame representing a track point
@@ -118,4 +111,66 @@ def get_dataframes(fname: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
     laps_df.set_index('number', inplace=True)
     points_df = pd.DataFrame(points_data, columns=POINTS_COLUMN_NAMES)
 
-    return laps_df, points_df
+    return points_df
+
+
+####################################
+# FEATURE ENGINEERING
+####################################
+def data_feat_eng(df):
+    '''
+    pd DataFrame from gpx file as INPUT.
+    Create new features, enriching df
+    OUTPUT pd DataFrame with added features
+    '''
+
+    # Duration
+    df[['duration']] = df[['time']] - df[['time']].iloc[0]
+    df['duration'] = pd.to_datetime(df['duration'].dt.total_seconds(),unit='s').dt.strftime("%H:%M:%S")
+
+    # D+
+    df[['elev_diff']] = df[['elevation']].diff()
+    df['d+'] = df[df['elev_diff']>0]['elev_diff'].cumsum().round(2)
+    df = df.fillna(method='ffill')
+
+    # Cumul Elevation
+    df['elev_cum'] = df.elev_diff.cumsum().round(2)
+
+    # Avg deniv for color
+    n=60
+    df['d_avg'] = df['elev_diff'].rolling(n).sum().round(2)
+    return df
+
+
+def data_feat_eng_FIT(df):
+    '''
+    pd DataFrame from FIT file as INPUT.
+    Create new features, enriching df
+    OUTPUT pd DataFrame with added features
+    '''
+    df = df.rename(columns={'altitude':'elevation','timestamp':'time'})
+
+    # Duration
+    df[['duration']] = df[['time']] - df[['time']].iloc[0]
+    df['duration'] = pd.to_datetime(df['duration'].dt.total_seconds(),unit='s').dt.strftime("%H:%M:%S")
+
+    # D+
+    df[['elev_diff']] = df[['elevation']].diff()
+    df['d+'] = df[df['elev_diff']>0]['elev_diff'].cumsum().round(2)
+    df = df.fillna(method='ffill')
+
+    # Cumul Elevation
+    df['elev_cum'] = df.elev_diff.cumsum().round(2)
+
+    # Avg deniv for color
+    n=60
+    df['d_avg'] = df['elev_diff'].rolling(n).sum().round(2)
+
+    # Distance in km
+    df[['distance']] = df[['speed']].cumsum()/1000
+    df[['distance']]= df[['distance']].round(3)
+
+    # Speed in km/h
+    df[['speed']] = df[['speed']]*3600/1000
+
+    return df
