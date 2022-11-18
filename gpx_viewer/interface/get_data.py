@@ -172,5 +172,9 @@ def data_feat_eng_FIT(df):
 
     # Speed in km/h
     df[['speed']] = df[['speed']]*3600/1000
+    df[['speed']] = df[['speed']].rolling(5).mean()
+
+    # Smooth HR
+    df[['heart_rate']] = df[['heart_rate']].rolling(5).mean()
 
     return df
