@@ -15,9 +15,10 @@ def map_2d(df,color='d_avg'):
     fig = px.scatter_mapbox(df,
                             lat='latitude',
                             lon='longitude',
-                            hover_name='d+',
+                            hover_name='duration',
+                            hover_data=['elevation','elev_cum','d+'],
                             mapbox_style="open-street-map",
-                            zoom=11,
+                            #zoom=11,
                             color=color,
                             color_continuous_scale=color_cont,
                             title='2D Map - Elevation Highlight',
@@ -37,9 +38,10 @@ def map_3d(df,color='d_avg'):
                         x='longitude',
                         y='latitude',
                         z='elevation',
+                        hover_name='duration',
+                        hover_data=['elevation','elev_cum','d+'],
                         color=color,
                         color_continuous_scale=color_cont,
-                        hover_name='d+',
                         title='3D Profile - Elevation Highlight')
 
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
@@ -64,7 +66,8 @@ def elev_line(df,color='d_avg'):
                      y='elev_cum',
                      color=color,
                      color_continuous_scale=color_cont,
-                     hover_name='d+',
+                     hover_name='elev_cum',
+                     hover_data=['duration','elevation','d+'],
                      title='Elevation Profile in m'
                      )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
@@ -78,9 +81,9 @@ def line_d_avg(df):
     fig = px.histogram(df,
                        x='duration',
                        y='d_avg',
-                       hover_name='d+',
+                       hover_name='d_avg',
                        color_discrete_sequence=col_seq,
-                       title='90sec Elevation gain/loss in m',
+                       title='1min Elevation gain/loss in m',
                        opacity=0.75
                        )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
@@ -89,19 +92,19 @@ def line_d_avg(df):
 
 def histo_d_avg(df):
     '''
-    Plot the average deniv over 90sec
+    Plot the average deniv over 60sec
     '''
     fig = px.histogram(df,
                        x='d_avg',
                        hover_name='d+',
-                       title='90sec Elevation Distribution',
+                       title='1min Elevation Distribution',
                        nbins=50,
                        color_discrete_sequence=col_seq,
                        opacity=0.85
                        )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
     fig.update_layout(margin=dict(l=20, r=20),
-                      xaxis_title="90sec average elevation in m")
+                      xaxis_title="1min average elevation in m")
     return fig
 
 
@@ -115,6 +118,7 @@ def line_d_plus(df,color='d_avg'):
                      color=color,
                      color_continuous_scale=color_cont,
                      hover_name='d+',
+                     hover_data=['elevation','elev_cum'],
                      title='Cumul D+ m'
                      )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
