@@ -9,6 +9,7 @@ dash_bootstrap_templates
 
 # GPX
 gpxpy
+fitdecode
 
 # Server
 gunicorn
