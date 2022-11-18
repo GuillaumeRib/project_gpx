@@ -16,12 +16,12 @@ def map_2d(df,color='d_avg'):
                             lat='latitude',
                             lon='longitude',
                             hover_name='duration',
-                            hover_data=['elevation','elev_cum','d+'],
+                            hover_data=['elevation','speed','d+'],
                             mapbox_style="open-street-map",
                             #zoom=11,
                             color=color,
                             color_continuous_scale=color_cont,
-                            title='2D Map - Elevation Highlight',
+                            title='2D Map - Elevation Color',
                             #height=600
                             )
     fig.update_traces(marker=dict(size=5), selector=dict(mode='markers'))
@@ -29,7 +29,7 @@ def map_2d(df,color='d_avg'):
     return fig
 
 
-def map_3d(df,color='d_avg'):
+def map_3d(df,color='heart_rate'):
     '''
     3D scatterplot GPS trace.
     Custom feature as color
@@ -39,10 +39,11 @@ def map_3d(df,color='d_avg'):
                         y='latitude',
                         z='elevation',
                         hover_name='duration',
-                        hover_data=['elevation','elev_cum','d+'],
+                        hover_data=['elevation','d_avg','d+'],
                         color=color,
                         color_continuous_scale=color_cont,
-                        title='3D Profile - Elevation Highlight')
+                        #color_continuous_midpoint=25,
+                        title='3D Profile - HR color')
 
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
     fig.update_layout(scene = {"xaxis": {"nticks": 5},
@@ -56,27 +57,59 @@ def map_3d(df,color='d_avg'):
     return fig
 
 
-def elev_line(df,color='d_avg'):
+def speed_line_dist(df,color='d_avg'):
     '''
-    Line chart showing elevation profile
-    Custom feature as color
+    Line chart showing speed profile
     '''
-    fig = px.scatter(df,
-                     x='duration',
-                     y='elev_cum',
-                     color=color,
-                     color_continuous_scale=color_cont,
-                     hover_name='elev_cum',
-                     hover_data=['duration','elevation','d+'],
-                     title='Elevation Profile in m'
+    fig = px.line(df,
+                     x='distance',
+                     y='speed',
+                     color_discrete_sequence=['lightgreen'],
+                     hover_name='speed',
+                     hover_data=['duration','speed','heart_rate','d+'],
+                     title='Speed - Elevation - Heart Rate',
                      )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
-    fig.update_layout(margin=dict(l=20, r=20))
+    fig.update_layout(margin=dict(l=20, r=20, b=0),
+                      height=300)
+    return fig
+
+def elev_line_dist(df):
+    '''
+    Line chart showing elevation profile
+    '''
+    fig = px.line(df,
+                     x='distance',
+                     y='elev_cum',
+                     color_discrete_sequence=['lightblue'],
+                     hover_name='elev_cum',
+                     hover_data=['duration','speed','heart_rate','d+'],
+                     )
+    fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=20, r=20, b=0),
+                      height=250)
+    return fig
+
+
+def hr_line_dist(df,color='d_avg'):
+    '''
+    Line chart showing HR profile
+    '''
+    fig = px.line(df,
+                     x='distance',
+                     y='heart_rate',
+                     color_discrete_sequence=['indianred'],
+                     hover_name='heart_rate',
+                     hover_data=['duration','speed','heart_rate','d+'],
+                     )
+    fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=20, r=20, b=0),
+                      height=250)
     return fig
 
 def line_d_avg(df):
     '''
-    Plot the average deniv over 90sec
+    Plot the average deniv over
     '''
     fig = px.histogram(df,
                        x='duration',
@@ -123,4 +156,76 @@ def line_d_plus(df,color='d_avg'):
                      )
     fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
     fig.update_layout(margin=dict(l=20, r=20))
+    return fig
+
+
+
+def scatter(df,color='heart_rate'):
+    '''
+    ScatterPlot Heart Rate vs d_avg
+    +speed
+    '''
+    fig = px.scatter_3d(df,
+                     x='d_avg',
+                     z='heart_rate',
+                     y='speed',
+                     color=color,
+                     color_continuous_scale=color_cont,
+                     #size='speed',
+                     #hover_name='elev_cum',
+                     hover_data=['duration','elevation','d+'],
+                     title='Heart Rate vs Speed vs Elevation'
+                     )
+    fig.update_traces(
+        marker=dict(size=2),
+        selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=20, r=20),
+                      height=600,
+                      scene={"camera_eye": {"x": 0.5, "y": 0.5, "z": 0.5},
+                             "aspectratio": {"x": 0.7, "y": 0.7, "z": 0.7}})
+    return fig
+
+def speed_violin(df):
+    '''
+    Plot Violin of Speed
+    '''
+    fig = px.violin(df,
+                       y='speed',
+                       title='Speed Distribution',
+                       box=True,
+                       color_discrete_sequence=['lightgreen']
+                       )
+    fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=20, r=20),
+    )
+    return fig
+
+def elev_violin(df):
+    '''
+    Plot Violin of Elevation
+    '''
+    fig = px.violin(df,
+                       y='d_avg',
+                       title='Elevation Distribution',
+                       box=True,
+                       color_discrete_sequence=['lightblue']
+                       )
+    fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=20, r=20),
+    )
+    return fig
+
+def hr_violin(df):
+    '''
+    Plot Violin of HR
+    '''
+    fig = px.violin(df,
+                       y='heart_rate',
+                       title='Heart Rate Distribution',
+                       box=True,
+                       color_discrete_sequence=['indianred']
+                       )
+    fig.update_traces(marker=dict(size=3), selector=dict(mode='markers'))
+    fig.update_layout(margin=dict(l=20, r=20),
+    )
     return fig
