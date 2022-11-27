@@ -80,49 +80,43 @@ xl=6
 xxl=6
 
 
-
 app.layout = dbc.Container([
-
     dbc.Row([
         dbc.Col(title,width=12,class_name=('mt-4'))
     ]),
-
     dbc.Row([
         dbc.Col(html.H4(children=f'{df.distance.max().round(2)} km'),
-                class_name=('text-info',
-                "text-center",
-                'mb+4'),
-                width=3),
+            class_name=('text-info',
+            "text-center",
+            'mb+4'),
+            width=3),
         dbc.Col(html.H4(children=f'{df.speed.mean().round(2)} km/h'),
-                class_name=('text-info',
-                "text-center",
-                'mb+4'),
-                width=3),
+            class_name=('text-info',
+            "text-center",
+            'mb+4'),
+            width=3),
         dbc.Col(html.H4(children=f'{df.heart_rate.mean().round(2)} bpm'),
-                class_name=('text-info',
-                "text-center",
-                'mb+4'),
-                width=3),
+            class_name=('text-info',
+            "text-center",
+            'mb+4'),
+            width=3),
         dbc.Col(html.H4(children=f"D+ {df['d+'].max().round(2)} m"),
-                class_name=('text-info',
-                "text-center",
-                'mb+4'),
-                width=3),
-    ]),
-
+            class_name=('text-info',
+            "text-center",
+            'mb+4'),
+            width=3),
+        ]),
     dbc.Row([
         dbc.Col(map_2d,
-                xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
+            xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
         dbc.Col(map_3d,
-                xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
-    ],class_name='mt-4'),
-
+            xs=xs,sm=sm,md=md,lg=lg,xl=xl,xxl=xxl),
+        ],class_name='mt-4'),
     dbc.Row([
         speed_line_dist,
         elev_line_dist,
         hr_line_dist,
     ],class_name='mt-4'),
-
     dbc.Row([
         dbc.Col(speed_violin,
                 xs=4,sm=4,md=4,lg=4,xl=4,xxl=4),
@@ -134,11 +128,9 @@ app.layout = dbc.Container([
     dbc.Row([
         dbc.Col(scatter,
                 width=12),
-    ],class_name='mt-4',justify=True),
-
-],
-                           fluid=True,
-                           className="dbc")
+    ],class_name='mt-4',justify=True)],
+                        fluid=True,
+                        className="dbc")
 
 
 ####################################
