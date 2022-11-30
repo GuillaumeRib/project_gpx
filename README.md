@@ -11,5 +11,5 @@
 - Data Analysis / ETL / Front-end app
 
 # Live app
-https://gps-cycling-dash.onrender.com/
+- Please allow c. 20/30sec to launch if the app is on sleep: https://gps-cycling-dash.onrender.com/
 
