@@ -130,15 +130,15 @@ def data_feat_eng(df):
 
     # D+
     df[['elev_diff']] = df[['elevation']].diff()
-    df['d+'] = df[df['elev_diff']>0]['elev_diff'].cumsum().round(2)
+    df['d+'] = round(df[df['elev_diff']>0]['elev_diff'].cumsum(),2)
     df = df.fillna(method='ffill')
 
     # Cumul Elevation
-    df['elev_cum'] = df.elev_diff.cumsum().round(2)
+    df['elev_cum'] = round(df.elev_diff.cumsum(),2)
 
     # Avg deniv for color
     n=60
-    df['d_avg'] = df['elev_diff'].rolling(n).sum().round(2)
+    df['d_avg'] = round(df['elev_diff'].rolling(n).sum(),2)
     return df
 
 
@@ -156,19 +156,19 @@ def data_feat_eng_FIT(df):
 
     # D+
     df[['elev_diff']] = df[['elevation']].diff()
-    df['d+'] = df[df['elev_diff']>0]['elev_diff'].cumsum().round(2)
+    df['d+'] = round(df[df['elev_diff']>0]['elev_diff'].cumsum(),2)
     df = df.fillna(method='ffill')
 
     # Cumul Elevation
-    df['elev_cum'] = df.elev_diff.cumsum().round(2)
+    df['elev_cum'] = round(df.elev_diff.cumsum(),2)
 
     # Avg deniv for color
     n=60
-    df['d_avg'] = df['elev_diff'].rolling(n).sum().round(2)
+    df['d_avg'] = round(df['elev_diff'].rolling(n).sum(),2)
 
     # Distance in km
     df[['distance']] = df[['speed']].cumsum()/1000
-    df[['distance']]= df[['distance']].round(3)
+    df[['distance']]= round(df[['distance']],3)
 
     # Speed in km/h
     df[['speed']] = df[['speed']]*3600/1000
