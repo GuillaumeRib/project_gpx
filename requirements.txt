@@ -2,7 +2,7 @@
 pandas
 
 # dataviz
-plotly.express>=6.0.0,<7.0.0
+plotly>=6,<7
 dash>=2.15.0
 dash-bootstrap-components
 dash_bootstrap_templates==2.1.0
