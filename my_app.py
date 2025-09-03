@@ -18,8 +18,9 @@ from gpx_viewer.interface import data_viz
 ###################################
 # CONVERT GPX to Dataframe
 ####################################
-test_path = 'gpx_viewer/data/Ambert_Col_des_Supeyres.gpx'
-test_fit_path = 'gpx_viewer/data/8685365728.fit'
+# test_path = 'gpx_viewer/data/Ambert_Col_des_Supeyres.gpx'
+# test_fit_path = 'gpx_viewer/data/8685365728.fit'
+test_fit_path = 'gpx_viewer/data/Trail_dans_l_après_midi.fit'
 
 # To load GPX files
 #df = get_data.get_gpx(gpx_path=test_path)
