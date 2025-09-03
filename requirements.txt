@@ -2,10 +2,10 @@
 pandas
 
 # dataviz
-plotly.express
-dash
+plotly.express>=6.0.0,<7.0.0
+dash>=2.15.0
 dash-bootstrap-components
-dash_bootstrap_templates
+dash_bootstrap_templates==2.1.0
 
 # GPX
 gpxpy
